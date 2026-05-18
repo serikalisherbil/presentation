@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Информатикадағы ақпарат түрлері</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0f19;
+            color: #f3f4f6;
+            overflow: hidden;
+        }
+        .slide {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(100%);
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .slide.active {
+            transform: translateX(0);
+            opacity: 1;
+            position: relative;
+        }
+        .slide.prev {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+        /* Custom scrollbar for overview mode */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111827;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #374151;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4b5563;
+        }
+    </style>
+</head>
+<body class="h-screen w-screen flex flex-col justify-between select-none">
+
+    <!-- Progress Bar Container -->
+    <div class="w-full bg-gray-900 h-1.5 relative z-50">
+        <div id="progressBar" class="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 h-1.5 w-0 transition-all duration-300 ease-out"></div>
+    </div>
+
+    <!-- Header / Branding Area -->
+    <header class="px-6 py-4 flex justify-between items-center z-40 bg-gray-900/40 backdrop-blur-md border-b border-gray-800/50">
+        <div class="flex items-center space-x-3">
+            <span class="p-2 bg-indigo-600/20 text-indigo-400 rounded-lg">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+            </span>
+            <div>
+                <h2 class="text-xs font-semibold uppercase tracking-widest text-gray-400">Информатика сабағы</h2>
+                <h1 class="text-sm font-bold text-white">Ақпарат түрлері мен қасиеттері</h1>
+            </div>
+        </div>
+        <div class="flex items-center space-x-3">
+            <button id="overviewBtn" class="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 text-xs font-semibold rounded-lg flex items-center space-x-1.5 transition">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z"></path></svg>
+                <span>Кесте (Overview)</span>
+            </button>
+            <button id="fullscreenBtn" class="p-1.5 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-5h-4m4 0v4m0-4l-5 5M4 20v-4m0 4h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Presentation Workspace -->
+    <main class="relative flex-grow flex items-center justify-center overflow-hidden px-4 md:px-12 py-8">
+        
+        <!-- Slide Container -->
+        <div id="slidesContainer" class="w-full max-w-6xl h-full flex items-center justify-center relative">
+
+            <!-- SLIDE 1: Title Slide -->
+            <div class="slide active flex flex-col justify-center items-center text-center px-4" data-slide="1">
+                <div class="absolute inset-0 bg-radial-gradient from-indigo-900/20 to-transparent pointer-events-none"></div>
+                <span class="px-4 py-1.5 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded-full text-xs font-semibold tracking-wider mb-6 animate-pulse">
+                    ЖАҢА ТАҚЫРЫП
+                </span>
+                <h1 class="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-500 leading-tight mb-6">
+                    Информатикадағы ақпарат түрлері
+                </h1>
+                <p class="text-gray-400 text-lg md:text-xl max-w-2xl font-light mb-12">
+                    Ақпарат ұғымы, оның түрлері, қасиеттері және адам өмірі мен компьютердегі рөлі.
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                    <button onclick="nextSlide()" class="px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold rounded-xl shadow-lg shadow-indigo-600/30 transition transform hover:-translate-y-0.5">
+                        Презентацияны бастау
+                    </button>
+                </div>
+            </div>
+
+            <!-- SLIDE 2: What is Information -->
+            <div class="slide flex flex-col justify-center px-4" data-slide="2">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="flex items-center space-x-2 text-blue-400 mb-4">
+                            <span class="text-sm font-semibold uppercase tracking-wider">01-Бөлім</span>
+                            <span class="h-px w-8 bg-blue-500/50"></span>
+                            <span class="text-sm">Ақпарат ұғымы</span>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Ақпарат дегеніміз не?</h2>
+                        <p class="text-gray-300 text-base md:text-lg mb-6 leading-relaxed">
+                            <strong class="text-blue-400 font-semibold">Ақпарат</strong> (латынша <em class="text-indigo-300">"informatio"</em> — түсіндіру, баяндау, мәлімет) — бұл қоршаған ортадағы заттар, құбылыстар, процестер туралы алынатын мәліметтер жиынтығы.
+                        </p>
+                        <div class="bg-gray-800/40 border border-gray-700/50 rounded-2xl p-5 backdrop-blur-sm">
+                            <p class="text-sm text-gray-400 italic">
+                                "Ақпарат – тек қана адамдар емес, сонымен қатар тірі организмдер, техникалық құрылғылар арасында да алмасатын негізгі құрал."
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-6 bg-gradient-to-br from-blue-900/20 to-blue-800/10 border border-blue-500/20 rounded-2xl flex flex-col justify-between h-44">
+                            <div class="text-blue-400 text-3xl font-bold">01</div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">Мәлімет (Data)</h4>
+                                <p class="text-xs text-gray-400">Өңделмеген, белгілі бір тасымалдаушыда тіркелген фактілер.</p>
+                            </div>
+                        </div>
+                        <div class="p-6 bg-gradient-to-br from-indigo-900/20 to-indigo-800/10 border border-indigo-500/20 rounded-2xl flex flex-col justify-between h-44">
+                            <div class="text-indigo-400 text-3xl font-bold">02</div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">Білім (Knowledge)</h4>
+                                <p class="text-xs text-gray-400">Түсінілген, талданған және шешім қабылдауға қолданылатын ақпарат.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 3: Information Forms by Representation -->
+            <div class="slide flex flex-col justify-center px-4" data-slide="3">
+                <div class="text-center max-w-2xl mx-auto mb-8">
+                    <div class="flex justify-center items-center space-x-2 text-indigo-400 mb-2">
+                        <span class="text-sm font-semibold uppercase tracking-wider">02-Бөлім</span>
+                        <span class="h-px w-8 bg-indigo-500/50"></span>
+                        <span class="text-sm">Пішімдер</span>
+                    </div>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-white">Ұсынылу пішімі бойынша ақпарат түрлері</h2>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Textual -->
+                    <div class="bg-gray-800/40 border border-gray-700/50 p-5 rounded-2xl hover:border-indigo-500/40 transition duration-300">
+                        <div class="w-10 h-10 bg-blue-500/10 text-blue-400 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        </div>
+                        <h3 class="font-bold text-white mb-2 text-lg">Мәтіндік (Textual)</h3>
+                        <p class="text-sm text-gray-400">Әріптер, сөздер, сөйлемдер арқылы жазылған мәліметтер (мысалы: кітаптар, мақалалар).</p>
+                    </div>
+
+                    <!-- Numerical -->
+                    <div class="bg-gray-800/40 border border-gray-700/50 p-5 rounded-2xl hover:border-indigo-500/40 transition duration-300">
+                        <div class="w-10 h-10 bg-indigo-500/10 text-indigo-400 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h-3a2 2 0 00-2 2v9a2 2 0 002 2h9a2 2 0 002-2v-3m-7.707-1.707l3-3a1 1 0 011.414 0l3 3m-3-3v12"></path></svg>
+                        </div>
+                        <h3 class="font-bold text-white mb-2 text-lg">Сандық (Numerical)</h3>
+                        <p class="text-sm text-gray-400">Сандар және математикалық белгілер түріндегі ақпарат (мысалы: кестелер, формулалар, есептер).</p>
+                    </div>
+
+                    <!-- Graphical -->
+                    <div class="bg-gray-800/40 border border-gray-700/50 p-5 rounded-2xl hover:border-indigo-500/40 transition duration-300">
+                        <div class="w-10 h-10 bg-purple-500/10 text-purple-400 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a1 1 0 011.414 0L16 17m-2-2l1.586-1.586a1 1 0 011.414 0L21 14m-7-7h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h3 class="font-bold text-white mb-2 text-lg">Графикалық (Graphical)</h3>
+                        <p class="text-sm text-gray-400">Суреттер, сызбалар, диаграммалар мен карталар (мысалы: фотосуреттер, векторлық бейнелер).</p>
+                    </div>
+
+                    <!-- Audio -->
+                    <div class="bg-gray-800/40 border border-gray-700/50 p-5 rounded-2xl hover:border-indigo-500/40 transition duration-300">
+                        <div class="w-10 h-10 bg-pink-500/10 text-pink-400 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path></svg>
+                        </div>
+                        <h3 class="font-bold text-white mb-2 text-lg">Дыбыстық (Audio)</h3>
+                        <p class="text-sm text-gray-400">Ауызша айтылған сөз, музыка, табиғи және жасанды шулар (мысалы: подкасттар, әндер).</p>
+                    </div>
+
+                    <!-- Video / Animation -->
+                    <div class="bg-gray-800/40 border border-gray-700/50 p-5 rounded-2xl hover:border-indigo-500/40 transition duration-300">
+                        <div class="w-10 h-10 bg-emerald-500/10 text-emerald-400 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        </div>
+                        <h3 class="font-bold text-white mb-2 text-lg">Бейнелік (Video)</h3>
+                        <p class="text-sm text-gray-400">Қозғалыстағы бейне кадрлардың дыбыспен немесе дыбыссыз үйлесімі (мысалы: фильмдер, анимациялар).</p>
+                    </div>
+
+                    <!-- Multimedia -->
+                    <div class="bg-gray-800/40 border border-gray-700/50 p-5 rounded-2xl hover:border-indigo-500/40 transition duration-300">
+                        <div class="w-10 h-10 bg-yellow-500/10 text-yellow-400 rounded-lg flex items-center justify-center mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                        </div>
+                        <h3 class="font-bold text-white mb-2 text-lg">Мультимедиа (Multimedia)</h3>
+                        <p class="text-sm text-gray-400">Мәтін, графика, аудио және бейнені біріктіретін интерактивті орта (мысалы: компьютерлік ойындар).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 4: Information by Perception -->
+            <div class="slide flex flex-col justify-center px-4" data-slide="4">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="flex items-center space-x-2 text-emerald-400 mb-4">
+                            <span class="text-sm font-semibold uppercase tracking-wider">03-Бөлім</span>
+                            <span class="h-px w-8 bg-emerald-500/50"></span>
+                            <span class="text-sm">Қабылдау сезімдері</span>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Қабылдау тәсілдері бойынша ақпарат</h2>
+                        <p class="text-gray-300 text-sm md:text-base mb-6 leading-relaxed">
+                            Адам айналасындағы әлемді негізгі бес сезім мүшесі арқылы таниды және ақпаратты келесідей түрлерде қабылдайды:
+                        </p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3 bg-gray-800/30 p-3 rounded-xl">
+                                <span class="text-emerald-400 text-lg font-bold">👁️</span>
+                                <div>
+                                    <h4 class="font-bold text-white text-sm">Көру (Визуалды)</h4>
+                                    <p class="text-xs text-gray-400">Адам алатын барлық ақпараттың 90%-ына жуығы көз арқылы келеді.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3 bg-gray-800/30 p-3 rounded-xl">
+                                <span class="text-emerald-400 text-lg font-bold">👂</span>
+                                <div>
+                                    <h4 class="font-bold text-white text-sm">Есту (Аудиалды)</h4>
+                                    <p class="text-xs text-gray-400">Дыбыстар, сөздер, сигналдар арқылы келетін ақпарат (9%).</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3 bg-gray-800/30 p-3 rounded-xl">
+                                <span class="text-emerald-400 text-lg font-bold">🖐️</span>
+                                <div>
+                                    <h4 class="font-bold text-white text-sm">Сипап сезу (Тактильді)</h4>
+                                    <p class="text-xs text-gray-400">Температураны, беткейдің тегістігін және қаттылығын анықтау.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 lg:pl-10">
+                        <!-- Secondary senses -->
+                        <div class="p-6 bg-gradient-to-br from-purple-900/10 to-indigo-900/10 border border-purple-500/20 rounded-2xl">
+                            <h4 class="font-bold text-white text-lg flex items-center mb-2">
+                                <span class="mr-2">👃</span> Иіскеу (Ольфакторлы)
+                            </h4>
+                            <p class="text-xs text-gray-400 leading-relaxed">
+                                Иіс сезу арқылы қоршаған ортадағы қауіп-қатерлер мен заттарды (мысалы, газдың шығуы, тағамның бүлінуі) жылдам тануға көмектеседі.
+                            </p>
+                        </div>
+                        <div class="p-6 bg-gradient-to-br from-purple-900/10 to-indigo-900/10 border border-purple-500/20 rounded-2xl">
+                            <h4 class="font-bold text-white text-lg flex items-center mb-2">
+                                <span class="mr-2">👅</span> Дәм сезу (Вкусовые)
+                            </h4>
+                            <p class="text-xs text-gray-400 leading-relaxed">
+                                Тамақ өнімдерінің сапасын және дәмдік ерекшеліктерін (қышқыл, тәтті, ащы, тұзды) тіл рецепторлары арқылы анықтау.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 5: Properties of Information -->
+            <div class="slide flex flex-col justify-center px-4" data-slide="5">
+                <div class="text-center max-w-2xl mx-auto mb-8">
+                    <div class="flex justify-center items-center space-x-2 text-purple-400 mb-2">
+                        <span class="text-sm font-semibold uppercase tracking-wider">04-Бөлім</span>
+                        <span class="h-px w-8 bg-purple-500/50"></span>
+                        <span class="text-sm">Сапалық қасиеттер</span>
+                    </div>
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-white">Ақпараттың негізгі қасиеттері</h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+                    <!-- Column 1 -->
+                    <div class="space-y-4">
+                        <div class="bg-gray-800/30 border border-gray-700/50 p-4 rounded-xl flex items-start space-x-4">
+                            <div class="p-2 bg-blue-500/10 text-blue-400 rounded-lg font-bold">1</div>
+                            <div>
+                                <h4 class="font-bold text-white text-base">Анықтық (Толықтық)</h4>
+                                <p class="text-xs text-gray-400 mt-1">Шешім қабылдауға қажетті мәліметтердің толық деңгейде қамтылуы.</p>
+                            </div>
+                        </div>
+                        <div class="bg-gray-800/30 border border-gray-700/50 p-4 rounded-xl flex items-start space-x-4">
+                            <div class="p-2 bg-indigo-500/10 text-indigo-400 rounded-lg font-bold">2</div>
+                            <div>
+                                <h4 class="font-bold text-white text-base">Шынайылық (Дұрыстық)</h4>
+                                <p class="text-xs text-gray-400 mt-1">Ақпараттың ақиқатқа сәйкес келуі, жалған немесе бұрмаланған болмауы.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column 2 -->
+                    <div class="space-y-4">
+                        <div class="bg-gray-800/30 border border-gray-700/50 p-4 rounded-xl flex items-start space-x-4">
+                            <div class="p-2 bg-purple-500/10 text-purple-400 rounded-lg font-bold">3</div>
+                            <div>
+                                <h4 class="font-bold text-white text-base">Өзектілік (Ағымдағылығы)</h4>
+                                <p class="text-xs text-gray-400 mt-1">Ақпараттың маңыздылығы мен дәл қазіргі уақыт сұранысына сай болуы.</p>
+                            </div>
+                        </div>
+                        <div class="bg-gray-800/30 border border-gray-700/50 p-4 rounded-xl flex items-start space-x-4">
+                            <div class="p-2 bg-pink-500/10 text-pink-400 rounded-lg font-bold">4</div>
+                            <div>
+                                <h4 class="font-bold text-white text-base">Түсініктілік</h4>
+                                <p class="text-xs text-gray-400 mt-1">Ақпаратты қабылдаушыға түсінікті тілде немесе пішімде берілуі.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 6: Information Processes -->
+            <div class="slide flex flex-col justify-center px-4" data-slide="6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="flex items-center space-x-2 text-pink-400 mb-4">
+                            <span class="text-sm font-semibold uppercase tracking-wider">05-Бөлім</span>
+                            <span class="h-px w-8 bg-pink-500/50"></span>
+                            <span class="text-sm">Ақпаратпен жұмыс</span>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-6">Ақпараттық процестер</h2>
+                        <p class="text-gray-300 text-sm md:text-base leading-relaxed mb-6">
+                            Ақпарат өзінің "өмірлік циклінде" бірнеше негізгі процестерден өтеді. Олар компьютерде де, адам іс-әрекетінде де бірдей орындалады.
+                        </p>
+                        <div class="p-4 bg-gray-800/40 border border-gray-700/50 rounded-xl">
+                            <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider block mb-2">Технологиялық мысал:</span>
+                            <p class="text-xs text-gray-300">
+                                Камера суретті түсіреді (<strong class="text-pink-400">жинақтау</strong>), оны флеш-картаға жазады (<strong class="text-pink-400">сақтау</strong>), оны редакторда өңдейді (<strong class="text-pink-400">өңдеу</strong>) және әлеуметтік желіге жібереді (<strong class="text-pink-400">тасымалдау</strong>).
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <!-- Step 1 -->
+                        <div class="relative pl-8 border-l border-pink-500/30 pb-4">
+                            <div class="absolute -left-2.5 top-0 w-5 h-5 bg-pink-500 rounded-full flex items-center justify-center text-[10px] font-bold text-white">1</div>
+                            <h4 class="font-bold text-white text-sm">Жинақтау (Сбор)</h4>
+                            <p class="text-xs text-gray-400">Деректерді өлшеу құралдарымен, сауалнамамен немесе бақылау арқылы алу.</p>
+                        </div>
+                        <!-- Step 2 -->
+                        <div class="relative pl-8 border-l border-pink-500/30 pb-4">
+                            <div class="absolute -left-2.5 top-0 w-5 h-5 bg-pink-500 rounded-full flex items-center justify-center text-[10px] font-bold text-white">2</div>
+                            <h4 class="font-bold text-white text-sm">Сақтау (Хранение)</h4>
+                            <p class="text-xs text-gray-400">Тасымалдаушы құрылғыларда (HDD, флешка, қағаз, бұлттық сақтау орны) орналастыру.</p>
+                        </div>
+                        <!-- Step 3 -->
+                        <div class="relative pl-8 border-l border-pink-500/30 pb-4">
+                            <div class="absolute -left-2.5 top-0 w-5 h-5 bg-pink-500 rounded-full flex items-center justify-center text-[10px] font-bold text-white">3</div>
+                            <h4 class="font-bold text-white text-sm">Өңдеу (Обработка)</h4>
+                            <p class="text-xs text-gray-400">Есептеулер, сұрыптау, кодтау немесе түрлендіру жұмыстарын жасау.</p>
+                        </div>
+                        <!-- Step 4 -->
+                        <div class="relative pl-8">
+                            <div class="absolute -left-2.5 top-0 w-5 h-5 bg-pink-500 rounded-full flex items-center justify-center text-[10px] font-bold text-white">4</div>
+                            <h4 class="font-bold text-white text-sm">Тасымалдау (Передача)</h4>
+                            <p class="text-xs text-gray-400">Байланыс арналары арқылы жөнелтушіден қабылдаушыға жеткізу.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 7: Interactive Quiz -->
+            <div class="slide flex flex-col justify-center px-4" data-slide="7">
+                <div class="max-w-3xl mx-auto w-full">
+                    <div class="text-center mb-6">
+                        <span class="px-3 py-1 bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 rounded-full text-xs font-semibold tracking-wider mb-2 inline-block">
+                            ИНТЕРАКТИВТІ СЫНАҚ
+                        </span>
+                        <h2 class="text-2xl md:text-3xl font-extrabold text-white">Біліміңді тексер</h2>
+                    </div>
+
+                    <!-- Quiz Area -->
+                    <div id="quizContainer" class="bg-gray-800/30 border border-gray-700/50 rounded-2xl p-6 md:p-8 backdrop-blur-sm">
+                        
+                        <!-- Question 1 -->
+                        <div id="q1" class="quiz-question">
+                            <p class="text-xs text-gray-400 font-semibold mb-2 uppercase">Сұрақ 1 / 2</p>
+                            <h3 class="text-lg md:text-xl font-bold text-white mb-6">Адам ең көп ақпаратты қай сезім мүшесі арқылы қабылдайды?</h3>
+                            <div class="space-y-3">
+                                <button onclick="checkAnswer(1, 'A', this)" class="w-full text-left p-4 bg-gray-800 hover:bg-gray-750 border border-gray-700 rounded-xl transition flex justify-between items-center group">
+                                    <span>А) Есту мүшесі арқылы</span>
+                                    <span class="w-6 h-6 border border-gray-600 rounded-full flex items-center justify-center text-xs group-hover:border-indigo-500"></span>
+                                </button>
+                                <button onclick="checkAnswer(1, 'B', this)" class="w-full text-left p-4 bg-gray-800 hover:bg-gray-750 border border-gray-700 rounded-xl transition flex justify-between items-center group">
+                                    <span>Ә) Сипап сезу арқылы</span>
+                                    <span class="w-6 h-6 border border-gray-600 rounded-full flex items-center justify-center text-xs group-hover:border-indigo-500"></span>
+                                </button>
+                                <button onclick="checkAnswer(1, 'C', this)" class="w-full text-left p-4 bg-gray-800 hover:bg-gray-750 border border-gray-700 rounded-xl transition flex justify-between items-center group">
+                                    <span>Б) Көру мүшесі (визуалды) арқылы</span>
+                                    <span class="w-6 h-6 border border-gray-600 rounded-full flex items-center justify-center text-xs group-hover:border-indigo-500"></span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Question 2 (Hidden by default) -->
+                        <div id="q2" class="quiz-question hidden">
+                            <p class="text-xs text-gray-400 font-semibold mb-2 uppercase">Сұрақ 2 / 2</p>
+                            <h3 class="text-lg md:text-xl font-bold text-white mb-6">Қайсысы ақпараттың негізгі қасиетіне ЖАТПАЙДЫ?</h3>
+                            <div class="space-y-3">
+                                <button onclick="checkAnswer(2, 'A', this)" class="w-full text-left p-4 bg-gray-800 hover:bg-gray-750 border border-gray-700 rounded-xl transition flex justify-between items-center group">
+                                    <span>А) Түсініктілігі</span>
+                                    <span class="w-6 h-6 border border-gray-600 rounded-full flex items-center justify-center text-xs group-hover:border-indigo-500"></span>
+                                </button>
+                                <button onclick="checkAnswer(2, 'B', this)" class="w-full text-left p-4 bg-gray-800 hover:bg-gray-750 border border-gray-700 rounded-xl transition flex justify-between items-center group">
+                                    <span>Ә) Салмағы мен ауырлығы</span>
+                                    <span class="w-6 h-6 border border-gray-600 rounded-full flex items-center justify-center text-xs group-hover:border-indigo-500"></span>
+                                </button>
+                                <button onclick="checkAnswer(2, 'C', this)" class="w-full text-left p-4 bg-gray-800 hover:bg-gray-750 border border-gray-700 rounded-xl transition flex justify-between items-center group">
+                                    <span>Б) Өзектілігі мен дәлдігі</span>
+                                    <span class="w-6 h-6 border border-gray-600 rounded-full flex items-center justify-center text-xs group-hover:border-indigo-500"></span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Quiz Result -->
+                        <div id="quizResult" class="hidden text-center py-6">
+                            <div class="w-16 h-16 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <h4 class="text-xl font-bold text-white mb-2">Сынақ аяқталды!</h4>
+                            <p id="resultText" class="text-gray-300 mb-6"></p>
+                            <button onclick="resetQuiz()" class="px-6 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold rounded-lg text-sm transition">
+                                Қайта тапсыру
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 8: Conclusion -->
+            <div class="slide flex flex-col justify-center items-center text-center px-4" data-slide="8">
+                <div class="absolute inset-0 bg-radial-gradient from-purple-900/10 to-transparent pointer-events-none"></div>
+                <div class="w-20 h-20 bg-indigo-600/10 text-indigo-400 rounded-3xl flex items-center justify-center mb-8 border border-indigo-500/20">
+                    <svg class="w-10 h-10 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-6">
+                    Назарларыңызға рақмет!
+                </h1>
+                <p class="text-gray-400 text-base md:text-lg max-w-2xl font-light mb-8">
+                    Ақпараттық технологиялар дәуірінде ақпаратты дұрыс талдап, оның сапасын бағалай білу — әрбір заманауи адамның маңызды дағдысы.
+                </p>
+                <div class="p-4 bg-gray-800/30 rounded-xl border border-gray-700/50 inline-flex items-center space-x-2">
+                    <span class="text-sm text-gray-300">Сұрақтар мен талқылауларға уақыт</span>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Navigation Overlay / Footer Controls -->
+    <footer class="px-6 py-6 flex justify-between items-center bg-gray-950 border-t border-gray-800/80 z-40">
+        <!-- Slide Count -->
+        <div class="text-xs text-gray-400 font-semibold tracking-wider">
+            Слайд <span id="currentSlideLabel" class="text-white">1</span> / <span id="totalSlidesLabel">8</span>
+        </div>
+
+        <!-- Arrows Navigation -->
+        <div class="flex items-center space-x-3">
+            <button onclick="prevSlide()" id="prevBtn" class="p-3 bg-gray-850 hover:bg-gray-800 text-white rounded-xl transition disabled:opacity-30 disabled:pointer-events-none" disabled>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+            </button>
+            <button onclick="nextSlide()" id="nextBtn" class="p-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl transition disabled:opacity-30 disabled:pointer-events-none">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+            </button>
+        </div>
+    </footer>
+
+    <!-- Overview Grid Overlay -->
+    <div id="overviewOverlay" class="fixed inset-0 bg-gray-950/95 backdrop-blur-md z-50 hidden flex flex-col p-8 overflow-y-auto">
+        <div class="max-w-6xl mx-auto w-full flex flex-col h-full">
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-bold text-white">Барлық слайдтар кестесі</h2>
+                <button id="closeOverviewBtn" class="p-2 bg-gray-800 hover:bg-gray-700 rounded-full text-white transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 flex-grow items-center">
+                <!-- Overview Cards (Dynamically populated with JS for accurate preview/links) -->
+                <div onclick="jumpToSlide(1)" class="overview-card cursor-pointer group bg-gray-900 border-2 border-transparent p-5 rounded-xl hover:border-indigo-500/80 transition flex flex-col justify-between h-36">
+                    <span class="text-xs font-semibold text-gray-500">1-Слайд</span>
+                    <h4 class="font-bold text-white text-sm group-hover:text-indigo-400">Кіріспе / Басты бет</h4>
+                </div>
+                <div onclick="jumpToSlide(2)" class="overview-card cursor-pointer group bg-gray-900 border-2 border-transparent p-5 rounded-xl hover:border-indigo-500/80 transition flex flex-col justify-between h-36">
+                    <span class="text-xs font-semibold text-gray-500">2-Слайд</span>
+                    <h4 class="font-bold text-white text-sm group-hover:text-indigo-400">Ақпарат деген не?</h4>
+                </div>
+                <div onclick="jumpToSlide(3)" class="overview-card cursor-pointer group bg-gray-900 border-2 border-transparent p-5 rounded-xl hover:border-indigo-500/80 transition flex flex-col justify-between h-36">
+                    <span class="text-xs font-semibold text-gray-500">3-Слайд</span>
+                    <h4 class="font-bold text-white text-sm group-hover:text-indigo-400">Ұсынылу пішімі бойынша</h4>
+                </div>
+                <div onclick="jumpToSlide(4)" class="overview-card cursor-pointer group bg-gray-900 border-2 border-transparent p-5 rounded-xl hover:border-indigo-500/80 transition flex flex-col justify-between h-36">
+                    <span class="text-xs font-semibold text-gray-500">4-Слайд</span>
+                    <h4 class="font-bold text-white text-sm group-hover:text-indigo-400">Қабылдау сезімдері</h4>
+                </div>
+                <div onclick="jumpToSlide(5)" class="overview-card cursor-pointer group bg-gray-900 border-2 border-transparent p-5 rounded-xl hover:border-indigo-500/80 transition flex flex-col justify-between h-36">
+                    <span class="text-xs font-semibold text-gray-500">5-Слайд</span>
+                    <h4 class="font-bold text-white text-sm group-hover:text-indigo-400">Ақпарат қасиеттері</h4>
+                </div>
+                <div onclick="jumpToSlide(6)" class="overview-card cursor-pointer group bg-gray-900 border-2 border-transparent p-5 rounded-xl hover:border-indigo-500/80 transition flex flex-col justify-between h-36">
+                    <span class="text-xs font-semibold text-gray-500">6-Слайд</span>
+                    <h4 class="font-bold text-white text-sm group-hover:text-indigo-400">Ақпараттық процестер</h4>
+                </div>
+                <div onclick="jumpToSlide(7)" class="overview-card cursor-pointer group bg-gray-900 border-2 border-transparent p-5 rounded-xl hover:border-indigo-500/80 transition flex flex-col justify-between h-36">
+                    <span class="text-xs font-semibold text-gray-500">7-Слайд</span>
+                    <h4 class="font-bold text-white text-sm group-hover:text-indigo-400">Білімді тексеру (Тест)</h4>
+                </div>
+                <div onclick="jumpToSlide(8)" class="overview-card cursor-pointer group bg-gray-900 border-2 border-transparent p-5 rounded-xl hover:border-indigo-500/80 transition flex flex-col justify-between h-36">
+                    <span class="text-xs font-semibold text-gray-500">8-Слайд</span>
+                    <h4 class="font-bold text-white text-sm group-hover:text-indigo-400">Қорытынды</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State variables
+        let currentSlide = 1;
+        const totalSlides = 8;
+        
+        // Quiz answers
+        const correctAnswers = {
+            1: 'C',
+            2: 'B'
+        };
+        let userAnswers = {};
+
+        // DOM Elements
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const currentSlideLabel = document.getElementById('currentSlideLabel');
+        const totalSlidesLabel = document.getElementById('totalSlidesLabel');
+        const progressBar = document.getElementById('progressBar');
+        const overviewBtn = document.getElementById('overviewBtn');
+        const overviewOverlay = document.getElementById('overviewOverlay');
+        const closeOverviewBtn = document.getElementById('closeOverviewBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+        // Initialize display Labels
+        totalSlidesLabel.textContent = totalSlides;
+
+        function updatePresentation() {
+            slides.forEach((slide) => {
+                const slideIndex = parseInt(slide.getAttribute('data-slide'));
+                slide.classList.remove('active', 'prev');
+                
+                if (slideIndex === currentSlide) {
+                    slide.classList.add('active');
+                } else if (slideIndex < currentSlide) {
+                    slide.classList.add('prev');
+                }
+            });
+
+            // Update footer controls
+            currentSlideLabel.textContent = currentSlide;
+            prevBtn.disabled = currentSlide === 1;
+            nextBtn.disabled = currentSlide === totalSlides;
+
+            // Update progress bar
+            const percentage = ((currentSlide - 1) / (totalSlides - 1)) * 100;
+            progressBar.style.width = `${percentage}%`;
+
+            // Style active overview card
+            const overviewCards = document.querySelectorAll('.overview-card');
+            overviewCards.forEach((card, index) => {
+                if (index + 1 === currentSlide) {
+                    card.classList.add('border-indigo-500', 'bg-indigo-950/30');
+                } else {
+                    card.classList.remove('border-indigo-500', 'bg-indigo-950/30');
+                }
+            });
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                updatePresentation();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 1) {
+                currentSlide--;
+                updatePresentation();
+            }
+        }
+
+        function jumpToSlide(num) {
+            currentSlide = num;
+            updatePresentation();
+            overviewOverlay.classList.add('hidden');
+        }
+
+        // Keyboard Control Setup
+        document.addEventListener('keydown', (e) => {
+            if (overviewOverlay.classList.contains('hidden')) {
+                if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                    nextSlide();
+                } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                    prevSlide();
+                }
+            }
+        });
+
+        // Overview Management
+        overviewBtn.addEventListener('click', () => {
+            overviewOverlay.classList.remove('hidden');
+        });
+        closeOverviewBtn.addEventListener('click', () => {
+            overviewOverlay.classList.add('hidden');
+        });
+
+        // Fullscreen Mode Handler
+        fullscreenBtn.addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Экрана толық режимге өту мүмкін емес: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        });
+
+        // Swipe Gestures for Touch Screens
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+
+        function handleSwipe() {
+            const threshold = 50;
+            if (touchEndX < touchStartX - threshold) {
+                nextSlide(); // Swiped left
+            }
+            if (touchEndX > touchStartX + threshold) {
+                prevSlide(); // Swiped right
+            }
+        }
+
+        // Quiz System Methods
+        function checkAnswer(questionNum, optionSelected, buttonElement) {
+            userAnswers[questionNum] = optionSelected;
+            
+            // Highlight options visually
+            const parent = buttonElement.parentElement;
+            const buttons = parent.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.disabled = true; // disable after select
+                btn.classList.remove('bg-gray-800', 'hover:bg-gray-750');
+                btn.classList.add('bg-gray-900/60', 'opacity-50');
+            });
+
+            const correct = correctAnswers[questionNum];
+            if (optionSelected === correct) {
+                buttonElement.classList.add('bg-emerald-950/40', 'border-emerald-500', 'text-emerald-300');
+                buttonElement.classList.remove('opacity-50');
+            } else {
+                buttonElement.classList.add('bg-rose-950/40', 'border-rose-500', 'text-rose-300');
+                buttonElement.classList.remove('opacity-50');
+                
+                // Show the correct answer as well
+                buttons.forEach(btn => {
+                    if (btn.innerText.startsWith(correct) || (correct === 'C' && btn.innerText.startsWith('Б')) || (correct === 'B' && btn.innerText.startsWith('Ә'))) {
+                        btn.classList.add('bg-emerald-950/40', 'border-emerald-500', 'text-emerald-300');
+                        btn.classList.remove('opacity-50');
+                    }
+                });
+            }
+
+            // Move to next question or show results
+            setTimeout(() => {
+                if (questionNum === 1) {
+                    document.getElementById('q1').classList.add('hidden');
+                    document.getElementById('q2').classList.remove('hidden');
+                } else if (questionNum === 2) {
+                    document.getElementById('q2').classList.add('hidden');
+                    showQuizResults();
+                }
+            }, 1800);
+        }
+
+        function showQuizResults() {
+            let score = 0;
+            if (userAnswers[1] === correctAnswers[1]) score++;
+            if (userAnswers[2] === correctAnswers[2]) score++;
+
+            const resultContainer = document.getElementById('quizResult');
+            const resultText = document.getElementById('resultText');
+            resultContainer.classList.remove('hidden');
+            
+            resultText.innerHTML = `Сіздің нәтижеңіз: <strong class="text-white text-lg">${score} / 2</strong> дұрыс жауап.<br>` + 
+                (score === 2 ? "Тамаша! Сіз ақпарат түрлері мен қасиеттерін толық меңгердіңіз!" : "Жақсы әрекет, бірақ слайдтарды қайта қарап шығуды ұсынамыз.");
+        }
+
+        function resetQuiz() {
+            userAnswers = {};
+            document.getElementById('quizResult').classList.add('hidden');
+            document.getElementById('q1').classList.remove('hidden');
+            document.getElementById('q2').classList.add('hidden');
+            
+            // Reset buttons styles
+            const allQuizBtns = document.querySelectorAll('.quiz-question button');
+            allQuizBtns.forEach(btn => {
+                btn.disabled = false;
+                btn.className = "w-full text-left p-4 bg-gray-800 hover:bg-gray-750 border border-gray-700 rounded-xl transition flex justify-between items-center group";
+            });
+        }
+
+        // Initialize first slide on load
+        window.onload = function() {
+            updatePresentation();
+        };
+    </script>
+</body>
+</html>
